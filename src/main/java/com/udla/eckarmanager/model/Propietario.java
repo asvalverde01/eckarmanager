@@ -6,12 +6,16 @@ import javax.persistence.*;
 
 import org.openxava.annotations.*;
 
+import lombok.*;
+
 @Entity
 @Table(name = "propietario")
+@Data
 @View(members = 
     "datosPersonales {nombre, apellido, cedula, direccion, telefono, email};" +
     "gestionAutos {autos}"
 )
+@View(name = "Simple", members = "nombre, apellido, cedula")
 public class Propietario {
 
     @Id
@@ -38,88 +42,21 @@ public class Propietario {
 
     @OneToMany(mappedBy = "propietario", cascade = CascadeType.ALL)
     @ListProperties("marca, modelo, anio, color, numeroPlaca")
-    private Collection<Auto> autos;
+    private Collection<Auto> autos = new ArrayList<>();
 
-    // Constructor
-    public Propietario() {
-        this.autos = new ArrayList<>();
-    }
-
-    // Getters y Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getCedula() {
-        return cedula;
-    }
-
-    public void setCedula(String cedula) {
-        this.cedula = cedula;
-    }
-
-    public Collection<Auto> getAutos() {
-        return autos;
-    }
-
-    public void setAutos(Collection<Auto> autos) {
-        this.autos = autos;
-    }
-
-    // Métodos de negocio relacionados con la gestión de autos
     @Transient
     public void asociarAuto(Auto auto) {
-        auto.setPropietario(this);
-        this.autos.add(auto);
+        if (auto != null && !this.autos.contains(auto)) {
+            auto.setPropietario(this);
+            this.autos.add(auto);
+        }
     }
 
     @Transient
     public void desasociarAuto(Auto auto) {
-        auto.setPropietario(null);
-        this.autos.remove(auto);
+        if (auto != null && this.autos.contains(auto)) {
+            auto.setPropietario(null);
+            this.autos.remove(auto);
+        }
     }
 }

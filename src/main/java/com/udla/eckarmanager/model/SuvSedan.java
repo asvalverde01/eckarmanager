@@ -4,13 +4,17 @@ import javax.persistence.*;
 
 import org.openxava.annotations.*;
 
+import lombok.*;
+
 @Entity
 @DiscriminatorValue("SUV_SEDAN")
+@Data
 @View(members =
     "Datos Generales[" +
     "marca, modelo, anio, color;" +
-    "numeroPlaca, capacidadMotor, tipoMotor, traccion" +
-    "]" +
+    "numeroPlaca, capacidadMotor, tipoMotor, traccion;" +
+    "propietario" +
+    "];" +
     "Datos Específicos[" +
     "tipoAuto, nivelEquipamiento" +
     "]"
@@ -23,24 +27,6 @@ public class SuvSedan extends Auto {
     @Column(length = 50)
     private String nivelEquipamiento;
 
-    // Getters y setters
-    public String getTipoAuto() {
-        return tipoAuto;
-    }
-
-    public void setTipoAuto(String tipoAuto) {
-        this.tipoAuto = tipoAuto;
-    }
-
-    public String getNivelEquipamiento() {
-        return nivelEquipamiento;
-    }
-
-    public void setNivelEquipamiento(String nivelEquipamiento) {
-        this.nivelEquipamiento = nivelEquipamiento;
-    }
-
-    // Método adicional
     public String descripcionCaracteristica() {
         return "Tipo: " + tipoAuto + ", Equipamiento: " + nivelEquipamiento;
     }
