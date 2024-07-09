@@ -10,7 +10,7 @@ import lombok.*;
 @Table(name = "suvsedan")
 @PrimaryKeyJoinColumn(name = "auto_id")
 @Data
-@EqualsAndHashCode(callSuper = true) // Evitar recursión en equals y hashCode
+@EqualsAndHashCode(callSuper = true) // 
 @View(members =
     "Datos Generales[" +
     "marca, modelo, anio, color;" +
