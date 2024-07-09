@@ -9,9 +9,9 @@ import lombok.*;
 
 @Entity
 @Table(name = "auto")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "tipo", discriminatorType = DiscriminatorType.STRING)
+@Inheritance(strategy = InheritanceType.JOINED)
 @Data
+@EqualsAndHashCode(of = "id") // Evitar recursión en equals y hashCode
 @View(members =
     "marca, modelo, anio, color;" +
     "numeroPlaca, capacidadMotor, tipoMotor, traccion;" +

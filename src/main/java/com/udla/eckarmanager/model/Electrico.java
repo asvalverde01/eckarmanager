@@ -7,8 +7,10 @@ import org.openxava.annotations.*;
 import lombok.*;
 
 @Entity
-@DiscriminatorValue("ELECTRICO")
+@Table(name = "electrico")
+@PrimaryKeyJoinColumn(name = "auto_id")
 @Data
+@EqualsAndHashCode(callSuper = true) // Evitar recursión en equals y hashCode
 @View(members =
     "Datos Generales[" +
     "marca, modelo, anio, color;" +

@@ -11,6 +11,7 @@ import lombok.*;
 @Entity
 @Table(name = "propietario")
 @Data
+@EqualsAndHashCode(of = "id") // Evitar recursión en equals y hashCode
 @View(members = 
     "datosPersonales {nombre, apellido, cedula, direccion, telefono, email};" +
     "gestionAutos {autos}"
